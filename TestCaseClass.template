@@ -1,0 +1,41 @@
+package %package%;
+
+import lib.io.InputReader;
+import lib.testing.TestCaseBuilder;
+import net.egork.chelper.task.Test;
+import net.egork.chelper.tester.TestCase;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class %TestCaseClass% {
+    final int NUM_TESTS = 10;
+    @TestCase
+
+    public Collection<Test> createTests() {
+        List<Test> tests = new ArrayList<>();
+
+        for (int i = 0; i < NUM_TESTS; i++) {
+            String input = getInput();
+            String output = getOutput(new ByteArrayInputStream(input.getBytes()));
+            tests.add(new Test(input, output));
+        }
+
+        return tests;
+    }
+
+    private String getInput() {
+        TestCaseBuilder in = new TestCaseBuilder();
+
+        return in.toString();
+    }
+
+    private String getOutput(ByteArrayInputStream byteArrayInputStream) {
+        TestCaseBuilder out = new TestCaseBuilder();
+        InputReader in = new InputReader(byteArrayInputStream);
+
+        return out.toString();
+    }
+}

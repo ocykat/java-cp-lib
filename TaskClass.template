@@ -1,0 +1,13 @@
+package %package%;
+
+import %InputClassFQN%;
+import %OutputClassFQN%;
+
+public class %TaskClass% {
+    %InputClass% in;
+    %OutputClass% out;
+
+    public void solve(int testNumber, %InputClass% in_, %OutputClass% out_) {
+        in = in_; out = out_;
+    }
+}

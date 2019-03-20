@@ -1,0 +1,15 @@
+# IntelliJ
+.idea/
+out/
+.idea_modules/
+cmake-build-*/
+*.iws
+*.iml
+
+# CHelper
+output/
+archive-unsorted/
+chelper.properties
+CHelperReport.txt
+
+src/sol
