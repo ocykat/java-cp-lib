@@ -1,4 +1,4 @@
-package lib.testing;
+package testing;
 
 public class TestCaseBuilder {
     StringBuilder builder;
@@ -16,6 +16,13 @@ public class TestCaseBuilder {
     public void println(Object... objects) {
         print(objects);
         builder.append('\n');
+    }
+
+    public void print(int[] a) {
+        for (int x : a) {
+            print(x, ' ');
+        }
+        print('\n');
     }
 
     public String toString() {
