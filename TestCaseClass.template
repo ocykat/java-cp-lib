@@ -1,7 +1,7 @@
 package %package%;
 
 import lib.io.InputReader;
-import lib.testing.TestCaseBuilder;
+import testing.TestCaseBuilder;
 import net.egork.chelper.task.Test;
 import net.egork.chelper.tester.TestCase;
 
@@ -11,11 +11,16 @@ import java.util.Collection;
 import java.util.List;
 
 public class %TestCaseClass% {
-    final int NUM_TESTS = 10;
-    @TestCase
+    final int NUM_TESTS = 100;
+    TestCaseBuilder inb;
+    InputReader in;
+    TestCaseBuilder out;
+    Generator gen;
 
+    @TestCase
     public Collection<Test> createTests() {
         List<Test> tests = new ArrayList<>();
+        gen = new Generator();
 
         for (int i = 0; i < NUM_TESTS; i++) {
             String input = getInput();
@@ -27,9 +32,9 @@ public class %TestCaseClass% {
     }
 
     private String getInput() {
-        TestCaseBuilder in = new TestCaseBuilder();
+        inb = new TestCaseBuilder();
 
-        return in.toString();
+        return inb.toString();
     }
 
     private String getOutput(ByteArrayInputStream byteArrayInputStream) {
