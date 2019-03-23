@@ -27,7 +27,7 @@ public class InputReaderAlt {
         catch (Exception e) {
             e.printStackTrace();
         }
-        if (line.isEmpty()) {
+        if (line == null || line.isEmpty()) {
             return null;
         }
         return line;

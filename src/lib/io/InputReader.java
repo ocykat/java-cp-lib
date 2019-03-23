@@ -123,7 +123,7 @@ public class InputReader {
         StringBuilder builder = new StringBuilder();
 
         do {
-            builder.append(c);
+            builder.append((char) c);
             c = nextRawByte();
         } while (!isWhiteSpace(c));
 
@@ -156,7 +156,7 @@ public class InputReader {
         do {
             builder.append(c);
             c = nextRawByte();
-        } while (c != '\n');
+        } while (c != '\r' && c != '\n');
 
         return builder.toString();
     }
