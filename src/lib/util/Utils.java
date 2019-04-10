@@ -12,4 +12,10 @@ public class Utils {
         if (c < 'a' || c > 'z') throw new RuntimeException();
         return c - 'a';
     }
+
+    public static <T> void swap(T a, T b) {
+        T tmp = a;
+        a = b;
+        b = tmp;
+    }
 }

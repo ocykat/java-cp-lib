@@ -16,33 +16,50 @@ public class InputReader {
         this.stream = stream;
     }
 
-    private byte nextRawByte() {
+    private void fillBuffer() {
+        try {
+            readLength = stream.read(buffer, 1, BUFFER_SIZE);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private byte get() {
         if (pointer > readLength) {
             pointer = 1;
-
-            try {
-                readLength = stream.read(buffer, 1, BUFFER_SIZE);
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (readLength == -1) return -1;
+            fillBuffer();
+            if (readLength <= 0) return -1;
         }
-
         return buffer[pointer++];
     }
 
-    public int nextChar() {
-        int c = nextRawByte();
-
-        while (isWhiteSpace(c)) {
-            c = nextRawByte();
+    private byte peek() {
+        if (pointer > readLength) {
+            pointer = 1;
+            fillBuffer();
+            if (readLength <= 0) return -1;
         }
-
-        return c;
+        return buffer[pointer];
     }
 
+    public boolean hasNext() {
+        int c;
+        while (isWhiteSpace(c = peek()) && c != -1) {
+            get();
+        }
+        return c != -1;
+    }
+
+    public char nextChar() {
+        int c = get();
+
+        while (isWhiteSpace(c)) {
+            c = get();
+        }
+
+        return (char) c;
+    }
 
     public int nextInt() {
         int c = nextChar();
@@ -50,15 +67,16 @@ public class InputReader {
 
         if (c == '-') {
             sign = -1;
-            c = nextRawByte();
+            c = get();
         }
 
         int abs = 0;
 
         do {
             if (c < '0' || c > '9') throw new InputMismatchException();
-            abs = c - '0' + abs * 10;
-            c = nextRawByte();
+            abs *= 10;
+            abs += c - '0';
+            c = get();
         } while (!isWhiteSpace(c));
 
         lastWhiteSpace = c;
@@ -68,19 +86,20 @@ public class InputReader {
 
     public long nextLong() {
         int c = nextChar();
-        int sign = 1;
+        long sign = 1;
 
         if (c == '-') {
             sign = -1;
-            c = nextRawByte();
+            c = get();
         }
 
         long abs = 0;
 
         do {
             if (c < '0' || c > '9') throw new InputMismatchException();
-            abs = c - '0' + abs * 10;
-            c = nextRawByte();
+            abs *= 10;
+            abs += c - '0';
+            c = get();
         } while (!isWhiteSpace(c));
 
         lastWhiteSpace = c;
@@ -94,7 +113,7 @@ public class InputReader {
 
         if (c == '-') {
             sign = -1;
-            c = nextRawByte();
+            c = get();
         }
 
         double abs = 0;
@@ -124,7 +143,7 @@ public class InputReader {
 
         do {
             builder.append((char) c);
-            c = nextRawByte();
+            c = get();
         } while (!isWhiteSpace(c));
 
         return builder.toString();
@@ -137,12 +156,12 @@ public class InputReader {
     public String nextLine() {
         if (lastWhiteSpace != '\r' && lastWhiteSpace != '\n') throw new InputMismatchException();
 
-        int c = nextRawByte();
+        int c = get();
 
         if (lastWhiteSpace == '\r') {
             if (c == '\n') {
                 lastWhiteSpace = '\n';
-                c = nextRawByte();
+                c = get();
             }
             else {
                 --pointer;
@@ -155,7 +174,7 @@ public class InputReader {
 
         do {
             builder.append(c);
-            c = nextRawByte();
+            c = get();
         } while (c != '\r' && c != '\n');
 
         return builder.toString();
