@@ -119,15 +119,21 @@ public class InputReader {
         double abs = 0;
 
         do {
-            abs = (c - '0') + abs * 10;
+            if (c < '0' || c > '9') throw new InputMismatchException();
+            abs *= 10;
+            abs += (c - '0');
+            c = get();
         } while (!isWhiteSpace(c) && c != '.');
 
         if (c == '.') {
-            int m = 1;
+            c = get();
+            double m = 1.0;
 
             do {
-                abs = abs + (c - '0') * m;
+                if (c < '0' || c > '9') throw new InputMismatchException();
                 m /= 10;
+                abs += (c - '0') * m;
+                c = get();
             } while (!isWhiteSpace(c));
         }
 
