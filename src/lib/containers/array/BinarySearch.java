@@ -165,11 +165,32 @@ public class BinarySearch {
         while (left < right) {
             int mid = (left + right) / 2;
 
-            if (a[mid] >= x) {
-                right = mid;
+            if (a[mid] < x) {
+                left = mid + 1;
             }
             else {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+
+    public static <T extends Comparable<T>> int lowerBound(T[] a, T x) {
+        int left = 0;
+        int right = a.length;
+        return lowerBound(a, x, left, right);
+    }
+
+    public static <T extends Comparable<T>> int lowerBound(T[] a, T x, int left, int right) {
+         while (left < right) {
+            int mid = (left + right) / 2;
+
+            if (a[mid].compareTo(x) < 0) {
                 left = mid + 1;
+            }
+            else {
+                right = mid;
             }
         }
 
@@ -186,6 +207,30 @@ public class BinarySearch {
 
             if (a[mid] <= x) {
                 left = mid + 1;
+            }
+            else {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+
+    public static <T extends Comparable<T>> int upperBound(T[] a, T x) {
+        int left = 0;
+        int right = a.length;
+        return upperBound(a, x, left, right);
+    }
+
+    public static <T extends Comparable<T>> int upperBound(T[] a, T x, int left, int right) {
+         while (left < right) {
+            int mid = (left + right) / 2;
+
+            if (a[mid].compareTo(x) <= 0) {
+                left = mid + 1;
+            }
+            else {
+                right = mid;
             }
         }
 
