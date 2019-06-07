@@ -170,7 +170,7 @@ public class InputReader {
                 c = get();
             }
             else {
-                --pointer;
+                throw new InputMismatchException();
             }
         }
 
@@ -179,14 +179,31 @@ public class InputReader {
         StringBuilder builder = new StringBuilder();
 
         do {
-            builder.append(c);
+            builder.append((char) c);
             c = get();
-        } while (c != '\r' && c != '\n');
+        } while (!isNewLineChar(c));
 
         return builder.toString();
     }
 
+    public String nextLine(boolean ignoreBlankLine) {
+        String line = null;
+
+        if (ignoreBlankLine) {
+            do {
+                line = nextLine();
+            } while (line == null);
+            return line;
+        }
+
+        return nextLine();
+    }
+
     public boolean isWhiteSpace(int c) {
         return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+    }
+
+    public boolean isNewLineChar(int c) {
+        return c == '\n' || c == '\r' || c == -1;
     }
 }
